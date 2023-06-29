@@ -36,7 +36,15 @@ const importDate = async () => {
     const sampleProducts = products.map((product) => {
       return { ...product, user: adminUser };
     });
-  } catch (error) {}
+      //inserting the sampleProducts to the database
+      await Product.insertMany(sampleProducts);
+      console.log('DATA IMPORTED SUCCESSFULLY')
+      process.exit()
+  } catch (error) {
+      console.log(`${error.message}`)
+      process.exit(1) //exiting the process with error
+
+  }
 };
 
 const destroyDate = async () => {
