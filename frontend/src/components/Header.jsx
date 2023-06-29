@@ -1,6 +1,6 @@
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container } from "react-bootstrap";
 import { FaShoppingCart, FaGooglePlay, FaUser } from "react-icons/fa";
-import { LinkContainer } from 'react-router-bootstrap';
+import { LinkContainer } from "react-router-bootstrap";
 import logo from "../assets/logo.png";
 
 const Header = () => {
