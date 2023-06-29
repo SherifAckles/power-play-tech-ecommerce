@@ -1,6 +1,7 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { FaShoppingCart, FaGooglePlay, FaUser } from "react-icons/fa";
 import { LinkContainer } from 'react-router-bootstrap';
+import logo from "../assets/logo.png";
 
 const Header = () => {
   return (
@@ -9,7 +10,8 @@ const Header = () => {
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
-              Power <FaGooglePlay style={{ color: "light" }} /> Tech
+              <img src={logo} alt="logo" /> Power
+              <FaGooglePlay style={{ color: "light" }} /> Tech
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
