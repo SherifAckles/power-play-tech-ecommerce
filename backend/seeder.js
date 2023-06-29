@@ -16,7 +16,7 @@ connectDB();
 
 //creating 2 functions to import data and destroy data
 
-const importDate = async () => {
+const importData = async () => {
   try {
     //first delete everything before importing any products or users to insure data consistency, avoiding duplication,
     //Start with a clean slate ensures that the imported data is the only data present in the system after the import process
@@ -36,18 +36,34 @@ const importDate = async () => {
     const sampleProducts = products.map((product) => {
       return { ...product, user: adminUser };
     });
-      //inserting the sampleProducts to the database
-      await Product.insertMany(sampleProducts);
-      console.log('DATA IMPORTED SUCCESSFULLY')
-      process.exit()
+    //inserting the sampleProducts to the database
+    await Product.insertMany(sampleProducts);
+    console.log("DATA IMPORTED SUCCESSFULLY");
+    process.exit();
   } catch (error) {
-      console.log(`${error.message}`)
-      process.exit(1) //exiting the process with error
-
+    console.log(`${error.message}`);
+    process.exit(1); //exiting the process with error
   }
 };
 
-const destroyDate = async () => {
+const destroyData = async () => {
   try {
-  } catch (error) {}
+    await Order.deleteMany();
+    await Product.deleteMany();
+    await User.deleteMany();
+    console.log("DATA DESTROYED SUCCESSFULLY");
+    process.exit();
+  } catch (error) {
+    console.log(`${error.message}`);
+    process.exit(1); //exiting the process with error
+  }
 };
+
+//if the argument value of the process is -d which is index 2 then destroy the data
+//else import the data, will do it -i for importing
+console.log(process.argv);
+// if (process.argv[2]=== '-d') {
+//     destroyData()
+// }if (process.argv[2] === "-i") {
+//   importData();
+// }
