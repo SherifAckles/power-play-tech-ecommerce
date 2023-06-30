@@ -63,10 +63,8 @@ const command = process.argv[2];
 if (command === "-d") {
   console.log("Destroying data...");
   destroyData();
-} else if (command === "-i") {
+} else {
   console.log("Importing data...");
   importData();
-} else {
-  console.log("Invalid command");
-  process.exit(1);
 }
+
