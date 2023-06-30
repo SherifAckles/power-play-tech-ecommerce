@@ -1,4 +1,3 @@
-//creating the script to seed the data
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import users from "./data/users.js";
@@ -7,68 +6,67 @@ import User from "./models/userModel.js";
 import Product from "./models/productModel.js";
 import Order from "./models/orderModel.js";
 import connectDB from "./config/db.js";
+import colors from "colors";
 
-//initialize dotenv
+// Initialize dotenv
 dotenv.config();
 
-//to connect with the database
+// Connect to the database
 connectDB();
 
-//creating 2 functions to import data and destroy data
-
+// Function to import data
 const importData = async () => {
   try {
-    //first delete everything before importing any products or users to insure data consistency, avoiding duplication,
-    //Start with a clean slate ensures that the imported data is the only data present in the system after the import process
+    // Delete existing data
     await Order.deleteMany();
     await Product.deleteMany();
     await User.deleteMany();
 
-    //creating the dummy users data
+    // Create dummy users
     const createdUsers = await User.insertMany(users);
-
-    //the only user who will create a product is the admin user,
-    //get the admin user by the index from users.js which is now the first one [0]
     const adminUser = createdUsers[0]._id;
 
-    //inserting the products in a const and for each product return all the product data,
-    //and the admin user value
-    const sampleProducts = products.map((product) => {
-      return { ...product, user: adminUser };
-    });
-    //inserting the sampleProducts to the database
+    // Insert sample products
+    const sampleProducts = products.map((product) => ({
+      ...product,
+      user: adminUser,
+    }));
     await Product.insertMany(sampleProducts);
-    console.log("DATA IMPORTED SUCCESSFULLY");
+
+    console.log("Data imported successfully".green.inverse);
     process.exit();
   } catch (error) {
-    console.log(error);
-    process.exit(1); //exiting the process with error
+    console.error(error);
+    process.exit(1);
   }
 };
 
+// Function to destroy data
 const destroyData = async () => {
   try {
     await Order.deleteMany();
     await Product.deleteMany();
     await User.deleteMany();
-    console.log("DATA DESTROYED SUCCESSFULLY");
+
+    console.log("Data destroyed successfully".red.inverse);
     process.exit();
   } catch (error) {
-    console.log(error);
-    process.exit(1); //exiting the process with error
+    console.error(error);
+    process.exit(1);
   }
 };
-
-//if the argument value of the process is -d which is index 2 then destroy the data
-//else import the data, will do it -i for importing
 
 // Get the command-line argument
 const command = process.argv[2];
 
-// Check the command and execute the corresponding function or display an error message
-command === "-d"
-  ? (console.log("Destroying data..."), destroyData()) // If command is "-d", call destroyData()
-  : command === "-i"
-  ? (console.log("Importing data..."), importData()) // If command is "-i", call importData()
-  : (console.log("Invalid command"), process.exit(1)); // If command is neither "-d" nor "-i", display an error message and exit
-
+// Execute the corresponding function based on the command
+if (command === "-d") {
+  console.log("Destroying data...");
+  destroyData();
+} else if (command === "-i") {
+  console.log("Importing data...");
+  importData();
+} else {
+  console.log("Invalid command");
+  process.exit(1);
+}
