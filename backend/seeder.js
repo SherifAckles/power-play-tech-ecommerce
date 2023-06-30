@@ -41,7 +41,7 @@ const importData = async () => {
     console.log("DATA IMPORTED SUCCESSFULLY");
     process.exit();
   } catch (error) {
-    console.log(`${error.message}`);
+    console.log(error);
     process.exit(1); //exiting the process with error
   }
 };
@@ -54,16 +54,21 @@ const destroyData = async () => {
     console.log("DATA DESTROYED SUCCESSFULLY");
     process.exit();
   } catch (error) {
-    console.log(`${error.message}`);
+    console.log(error);
     process.exit(1); //exiting the process with error
   }
 };
 
 //if the argument value of the process is -d which is index 2 then destroy the data
 //else import the data, will do it -i for importing
-console.log(process.argv);
-// if (process.argv[2]=== '-d') {
-//     destroyData()
-// }if (process.argv[2] === "-i") {
-//   importData();
-// }
+
+// Get the command-line argument
+const command = process.argv[2];
+
+// Check the command and execute the corresponding function or display an error message
+command === "-d"
+  ? (console.log("Destroying data..."), destroyData()) // If command is "-d", call destroyData()
+  : command === "-i"
+  ? (console.log("Importing data..."), importData()) // If command is "-i", call importData()
+  : (console.log("Invalid command"), process.exit(1)); // If command is neither "-d" nor "-i", display an error message and exit
+
