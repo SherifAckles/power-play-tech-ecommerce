@@ -68,3 +68,22 @@ if (command === "-d") {
   console.log("Importing data..."); // Log the import process
   importData(); // Call the importData function
 }
+// This code is responsible for importing and destroying data in the application's database. It performs the following tasks:
+
+// Imports necessary dependencies and modules, including mongoose for database connection, dotenv for environment variable management, and various models and data files.
+// Calls the connectDB() function to establish a connection to the MongoDB database.
+// Defines two functions: importData() and destroyData(), which handle the import and destruction of data, respectively.
+// The importData() function:
+// Deletes existing data by calling the deleteMany() method on the Order, Product, and User models.
+// Inserts dummy users into the database using the insertMany() method on the User model. The inserted user objects are obtained and stored in createdUsers.
+// Retrieves the ID of the first created user (assuming it's the admin user) and assigns it to adminUser.
+// Maps over the products array, assigning the adminUser as the owner of each product, and creates an array of modified product objects called sampleProducts.
+// Inserts the sampleProducts into the database using the insertMany() method on the Product model.
+// Logs a success message to the console and exits the process.
+// The destroyData() function:
+// Deletes all orders, products, and users in the database by calling the deleteMany() method on the corresponding models.
+// Logs a success message to the console and exits the process.
+// Retrieves the command-line argument provided when running the script.
+// If the command is -d, it logs a message indicating the destruction process and calls the destroyData() function.
+// If the command is not -d, it logs a message indicating the import process and calls the importData() function.
+// This script allows for easy import and destruction of data in the database by running the script with the appropriate command-line argument

@@ -25,3 +25,11 @@ const errorHandler = (err, req, res, next) => {
 
 // Export both middleware functions to make them accessible to other parts of the application.
 export { notFound, errorHandler };
+
+// The notFound function is used to handle requests for routes that are not found. It creates a new Error object with a descriptive message that includes the original URL requested. It then sets the response status code to 404 (Not Found) and passes the error object to the next middleware function using next(error).
+
+// The errorHandler function is used to handle errors that occur during request processing. It takes four parameters: err (the error object), req (the request object), res (the response object), and next (the next middleware function in the chain). Inside the function, it determines the appropriate status code based on the response status code, defaulting to 500 if not available. It also retrieves the error message from the error object.
+
+// If the error is a CastError with a kind of 'objectId', it indicates a resource not found error. In such cases, it sets the message to "Resource not found" and the status code to 404.
+
+// Finally, it sends the response with the appropriate status code and error message as a JSON object. If the application is running in production mode (process.env.NODE_ENV === "production"), it hides the stack trace. Otherwise, it includes the error stack trace in the response.
