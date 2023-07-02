@@ -1,5 +1,5 @@
 
-//Rather than continue add routes into productRoutes.js we created the productControllers and use it to keep things organized
+//Rather than continue adding routes into productRoutes.js we created the productControllers and use it to keep things organized
 
 import asyncHandler from "../middleware/asyncHandler.js"; // Import async handler middleware
 import Product from "../models/productModel.js"; // Import Product model
